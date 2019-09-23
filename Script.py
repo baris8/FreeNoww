@@ -1,23 +1,28 @@
+from Ride import Ride
+
 def main():
-    f = open("august.csv", "r")
+    file = input("Bitte geben sie den Dateinamen ein:\n")
+    f = open(file, "r")
     f.readline()
 
-    car1013 = ""
-    car398 = ""
+    car1013 = "DATE;LP;BAR;APP\n"
+    car398 = "DATE;LP;BAR;APP\n"
 
     for line in f:
-        items = line.split(";")
+        items = line.split(",")
 
-        out = get_data(items)
-        if out is not None:
-            if "D DH 1013" in out:
-                car1013 += out
-            else:
-                car398 += out
+        ride = get_data(items)
 
-    file_1013 = open("1013.csv", "w+")
-    file_1013.write(car1013)
-    file_1013.close()
+        if "398" in ride.lp and ride.bs == "ACCOMPLISHED":
+            car398 += ride.export_for_csv()
+        elif "1013" in ride.lp and ride.bs == "ACCOMPLISHED":
+            car1013 += ride.export_for_csv()
+
+    print(car398)
+    month = input("Bitte geben sie den Monat ein:\n")
+
+    export_to_file(car1013, "1013-"+ month)
+    export_to_file(car398, "398-" + month)
 
 def get_data(items):
     # Date
@@ -35,15 +40,13 @@ def get_data(items):
     # Booking State
     bs = items[-4]
     # License Plate
-    lp = items[-1]
+    lp = items[-1].replace("\n", "")
 
-    if bs == "CANCELED":
-        return None
+    return Ride(date, price, pm, bs, lp)
 
-    if pm == "APP":
-        return date + ";" + lp + ";;" + str(price)
-    else:
-        return date + ";" + lp + ";" + str(price)
+def export_to_file(output, name):
+    with open(name +".csv", "w") as file:
+        file.write(output)
 
 if __name__ == "__main__":
     main()
