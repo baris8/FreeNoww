@@ -2,7 +2,7 @@ from Ride import Ride
 
 def main():
     file = input("Bitte geben sie den Dateinamen ein:\n")
-    f = open(file, "r")
+    f = open(file+".csv", "r")
     f.readline()
 
     car1013 = "DATE;LP;BAR;APP\n"
@@ -18,7 +18,6 @@ def main():
         elif "1013" in ride.lp and ride.bs == "ACCOMPLISHED":
             car1013 += ride.export_for_csv()
 
-    print(car398)
     month = input("Bitte geben sie den Monat ein:\n")
 
     export_to_file(car1013, "1013-"+ month)
@@ -31,10 +30,13 @@ def get_data(items):
     price = 0
     valueStr = items[-8]
     tipStr = items[-7]
-    if len(valueStr) > 0 and len(tipStr) > 0:
+    value = 0
+    tip = 0
+    if len(valueStr) > 0:
         value = float(items[-8])
+    if len(tipStr) > 0:
         tip = float(items[-7])
-        price = round(value + tip, 2)
+    price = round(value + tip, 2)
     # Payment Method
     pm = items[-5]
     # Booking State
