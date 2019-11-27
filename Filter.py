@@ -6,18 +6,24 @@ class Filter:
 
     def __init__(self, file):
         self.file = file
+        self.rides = []
+        self.create_rides()
 
-    def make_rides(self):
+    def create_rides(self):
         self.file.readline()
         for line in self.file:
             items = line.split(",")
 
             ride = self.get_data(items)
+            self.rides.append(ride)
 
-            if "398" in ride.lp and ride.bs == "ACCOMPLISHED":
-                self.car398 += ride.export_for_csv()
-            elif "1013" in ride.lp and ride.bs == "ACCOMPLISHED":
-                self.car1013 += ride.export_for_csv()
+    def filter_rides(self, month):
+        filtered = []
+        for ride in self.rides:
+            if ride.date.split(".")[1] == month:
+                filtered.append(ride)
+        self.rides.clear()
+        self.rides = filtered
 
     def get_data(self, items):
         # Date
@@ -42,7 +48,15 @@ class Filter:
 
         return Ride(date, price, pm, bs, lp)
 
+    def rides_to_str(self):
+        for ride in self.rides:
+            if "398" in ride.lp and ride.bs == "ACCOMPLISHED":
+                self.car398 += ride.export_for_csv()
+            elif "1013" in ride.lp and ride.bs == "ACCOMPLISHED":
+                self.car1013 += ride.export_for_csv()
+
     def export_to_file(self, name):
+        self.rides_to_str()
         with open(name + "-398.csv", "w") as file:
             file.write(self.car398)
         with open(name + "-1013.csv", "w") as file:
