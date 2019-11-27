@@ -9,6 +9,7 @@ def main():
     car398 = "DATE;LP;BAR;APP\n"
 
     for line in f:
+
         items = line.split(",")
 
         ride = get_data(items)
