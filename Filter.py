@@ -26,23 +26,24 @@ class Filter:
         self.rides = filtered
 
     def get_data(self, items):
+        print(items)
         # Date
-        date = items[-10].split(" ")[0]
+        date = items[-11].split(" ")[0]
         # Price
         price = 0
-        valueStr = items[-8]
-        tipStr = items[-7]
+        valueStr = items[-9]
+        tipStr = items[-8]
         value = 0
         tip = 0
         if len(valueStr) > 0:
-            value = float(items[-8])
+            value = float(items[-9])
         if len(tipStr) > 0:
-            tip = float(items[-7])
+            tip = float(items[-8])
         price = round(value + tip, 2)
         # Payment Method
-        pm = items[-5]
+        pm = items[-6]
         # Booking State
-        bs = items[-4]
+        bs = items[-5]
         # License Plate
         lp = items[-1].replace("\n", "")
 
