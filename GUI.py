@@ -3,6 +3,7 @@ from tkinter import messagebox
 from tkinter.filedialog import askopenfilename
 from Filter import Filter
 
+
 class GUI:
     def __init__(self):
         self.window = Tk()
@@ -12,12 +13,10 @@ class GUI:
         self.open_btn = Button(self.window, text="Öffne Datei", command=self.open_file)
         self.open_btn.pack(side=TOP, expand=YES)
 
-
         self.file = None
         self.v = StringVar(self.window, "01")
 
         self.window.mainloop()
-
 
     def open_file(self):
         global file
@@ -30,7 +29,7 @@ class GUI:
 
     def next_page(self):
         self.open_btn.destroy()
-        self.label = Label(self.window, text = "Bitte wähle einen Monat aus und drück auf speichern.").pack()
+        self.label = Label(self.window, text="Bitte wähle einen Monat aus und drück auf speichern.").pack()
 
         # Radio Buttons
         values = {"Januar": "01",
@@ -56,6 +55,7 @@ class GUI:
         filter.filter_rides(self.v.get())
         filter.export_to_file(self.v.get())
         self.window.destroy()
+
 
 if __name__ == '__main__':
     gui = GUI()
