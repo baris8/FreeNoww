@@ -28,17 +28,17 @@ class Filter:
     def get_data(self, items):
         print(items)
         # Date
-        date = items[-11].split(" ")[0]
+        date = items[-12].split(" ")[0]
         # Price
         price = 0
-        valueStr = items[-9]
-        tipStr = items[-8]
+        valueStr = items[-11]
+        tipStr = items[-10]
         value = 0
         tip = 0
         if len(valueStr) > 0:
-            value = float(items[-9])
+            value = float(items[-11])
         if len(tipStr) > 0:
-            tip = float(items[-8])
+            tip = float(items[-10])
         price = round(value + tip, 2)
         # Payment Method
         pm = items[-6]
