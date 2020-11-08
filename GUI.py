@@ -21,7 +21,7 @@ class GUI:
     def open_file(self):
         global file
         file_name = askopenfilename(title="Open File", filetypes=(("CSV Files", "*.csv"),))
-        self.file = open(file_name, "r")
+        self.file = open(file_name, "r", encoding='utf-8')
         if self.file is None:
             messagebox.showerror("Could not open file", "Please try again!")
         else:
